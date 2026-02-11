@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dk
+  namespace: digital-kitchen
+spec:
+  rules:
+    - host: digital-kitchen.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: digital-kitchen
+                port:
+                  number: 80
