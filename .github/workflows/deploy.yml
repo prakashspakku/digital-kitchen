@@ -1,0 +1,34 @@
+name: Deploy
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      # -------------------------------
+      # 1. Add your one‑time prelude step HERE
+      # -------------------------------
+      - name: Allow PowerShell scripts in this session
+        shell: powershell
+        run: |
+          Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force
+          $policy = Get-ExecutionPolicy -List | Out-String
+          Write-Host "Effective execution policies:`n$policy"
+
+      # -------------------------------
+      # 2. Checkout repo (required)
+      # -------------------------------
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # -------------------------------
+      # 3. Your actual PowerShell commands
+      # -------------------------------
+      - name: Run deployment script
+        shell: powershell
+        run: ./deploy.ps1
+``
